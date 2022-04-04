@@ -1,4 +1,4 @@
-import { Categories, SortPoppup, Pizzes } from "../components";
+import { Categories, SortPoppup, Pizzas } from "../components";
 
 const MainPage = () => {
 	return (
@@ -7,7 +7,7 @@ const MainPage = () => {
 				<Categories />
 				<SortPoppup />
 			</div>
-			<Pizzes />
+			<Pizzas />
 		</div>
 	);
 };

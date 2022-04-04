@@ -2,11 +2,11 @@ import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit"
 import { useHttp } from "../../hooks/http.hook";
 
 const initialState = {
-	pizzes: [],
+	pizzas: [],
 	pizzaLoadingStatus: "idle",
 };
 
-export const fetchPizzes = createAsyncThunk("pizzes/fetchPizzes", (sort_type) => {
+export const fetchPizzas = createAsyncThunk("pizzas/fetchPizzas", (sort_type) => {
 	const { request } = useHttp();
 	const url = "http://localhost:3001/pizzas?_order";
 
@@ -20,41 +20,41 @@ export const fetchPizzes = createAsyncThunk("pizzes/fetchPizzes", (sort_type) =>
 	}
 });
 
-const pizzesSlice = createSlice({
-	name: "pizzes",
+const pizzasSlice = createSlice({
+	name: "pizzas",
 	initialState,
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchPizzes.pending, (state) => {
+			.addCase(fetchPizzas.pending, (state) => {
 				state.pizzaLoadingStatus = "loading";
 			})
-			.addCase(fetchPizzes.fulfilled, (state, action) => {
+			.addCase(fetchPizzas.fulfilled, (state, action) => {
 				state.pizzaLoadingStatus = "idle";
-				state.pizzes = action.payload;
+				state.pizzas = action.payload;
 			})
-			.addCase(fetchPizzes.rejected, (state) => {
+			.addCase(fetchPizzas.rejected, (state) => {
 				state.pizzaLoadingStatus = "error";
 			})
 			.addDefaultCase(() => {});
 	},
 });
 
-const { reducer } = pizzesSlice;
+const { reducer } = pizzasSlice;
 export default reducer;
 
-export const filteredPizzes = createSelector(
-	// pizzes
-	({ pizzes }) => pizzes.pizzes,
-	({ pizzes }) => pizzes.pizzaLoadingStatus,
+export const filteredPizzas = createSelector(
+	// pizzas
+	({ pizzas }) => pizzas.pizzas,
+	({ pizzas }) => pizzas.pizzaLoadingStatus,
 	// filters
 	({ filters }) => filters.selectedPoppupFilter,
 	({ filters }) => filters.selectedFilter,
-	(pizzes, loading, selectedPoppupFilter, selectedFilter) => {
+	(pizzas, loading, selectedPoppupFilter, selectedFilter) => {
 		if (selectedFilter === null) {
-			return { pizzes, selectedPoppupFilter, loading };
+			return { pizzas, selectedPoppupFilter, loading };
 		}
 		return {
-			pizzes: pizzes.filter((pizza) => pizza.category === selectedFilter),
+			pizzas: pizzas.filter((pizza) => pizza.category === selectedFilter),
 			selectedPoppupFilter,
 			loading,
 		};

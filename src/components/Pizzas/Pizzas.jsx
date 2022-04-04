@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPizzes, filteredPizzes } from "./PizzesSlice";
+import { fetchPizzas, filteredPizzas } from "./PizzasSlice";
 // components
 import PizzaBlock from "../PizzaBlock/PizzaBlock";
 import Skeleton, { skelets } from "../Loaders/Skeleton";
 
-const Pizzes = () => {
-	const { pizzes, selectedPoppupFilter, loading } = useSelector(filteredPizzes);
+const Pizzas = () => {
+	const { pizzas, selectedPoppupFilter, loading } = useSelector(filteredPizzas);
 	const cartItems = useSelector(({ cart }) => cart.cartItems);
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchPizzes(selectedPoppupFilter));
+		dispatch(fetchPizzas(selectedPoppupFilter));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedPoppupFilter]);
 
@@ -22,8 +22,8 @@ const Pizzes = () => {
 		<>
 			<h2 className="content__title">Все пиццы</h2>
 			<div className="content__items">
-				{loading === "idle" && pizzes.length > 0 ? (
-					pizzes.map((pizza) => {
+				{loading === "idle" && pizzas.length > 0 ? (
+					pizzas.map((pizza) => {
 						return (
 							<PizzaBlock
 								{...pizza}
@@ -41,4 +41,4 @@ const Pizzes = () => {
 	);
 };
 
-export default Pizzes;
+export default Pizzas;
